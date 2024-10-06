@@ -1,2 +1,2 @@
 # Lodgr
-Go-to platform for finding unique, hassle-free stays around the world.
+Lodgr connects travelers with unique stays across the globe. From urban pads to cozy retreats, find, book, and enjoy effortlessly. Your next adventure starts here!

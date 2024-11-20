@@ -1,0 +1,17 @@
+{
+  "name": "lodgr",
+  "version": "1.0.0",
+  "description": "Lodgr connects travelers with unique stays across the globe. From urban pads to cozy retreats, find, book, and enjoy effortlessly. Your next adventure starts here!",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Raghav Agarwal",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.1",
+    "mongoose": "^8.8.2"
+  }
+}

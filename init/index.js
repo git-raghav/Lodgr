@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const Listing = require("../models/listing.js");
-const initData = require('./data.js');
+const Listing = require("../models/listing.js");// Import the Listing model
+const initData = require('./data.js');// Import the sample data
 
 const MONGO_URL= "mongodb://127.0.0.1:27017/lodgr";
 main()
@@ -13,6 +13,8 @@ async function main() {
     await mongoose.connect(MONGO_URL);
 }
 
+// Function to initialize the database with sample data
+// This function clears the existing listings and inserts the sample data
 const initDB = async () => {
     await Listing.deleteMany({});
     await Listing.insertMany(initData.data);

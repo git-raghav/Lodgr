@@ -1,3 +1,4 @@
+// this file constains sample data with all constraints applied according to the Listing schema
 const sampleListings = [
 	{
 		title: "Cozy Beachfront Cottage",

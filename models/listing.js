@@ -23,12 +23,10 @@ const listingSchema = new mongoose.Schema({
 	image: {
 		filename: {
 			type: String,
-			required: true,
 			default: "listingimage",
 		},
 		url: {
 			type: String,
-			required: true,
 			default:
 				"https://plus.unsplash.com/premium_vector-1711987911074-aa7349e74a81?q=80&w=2342&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 			// Custom setter to handle empty strings or undefined values

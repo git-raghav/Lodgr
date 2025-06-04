@@ -1,19 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lodgr</title>
-</head>
-<body>
-    <h3>All Listings</h3>
-    <form action="/listings/new" method="GET">
-        <button>Create New Listing</button>
-    </form>
-    <ul>
-        <% for(let listing of allListings) { %>
-        <li><a href="/listings/<%= listing._id %>"><%= listing.title %></a></li>
-        <% } %>
-    </ul>
-</body>
-</html>
+<% layout("/layouts/boilerplate") %>
+
+<h3><b>All Listings</b></h3>
+<div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 g-4">
+	<% for(let listing of allListings) { %>
+	<a href="/listings/<%= listing._id %>" class="listing-link">
+	    <div class="card col">
+    		<img src="<%= listing.image %>" class="card-img-top" alt="Property Image" style="height: 12rem" />
+    		<div class="card-body">
+    			<p class="card-text">
+    				<b><%= listing.title %></b> <br />
+    				&#8377;<%= listing.price.toLocaleString("en-IN") %> per night
+    			</p>
+    		</div>
+    	</div>
+	</a>
+	<% } %>
+</div>

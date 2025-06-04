@@ -11,6 +11,7 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+app.engine("ejs", ejsMate); // using ejsMate for layout support in EJS
 
 /* -------------------------- connecting to MongoDB ------------------------- */
 const MONGO_URL = "mongodb://127.0.0.1:27017/lodgr";
@@ -76,6 +77,7 @@ app.get("/listings/:id/edit", async (req, res) => {
 	let { id } = req.params;
 	try {
 		const listing = await Listing.findById(id);
+        // console.log(listing);
 		res.render("listings/edit.ejs", { listing });
 	} catch (err) {
 		console.error("Error fetching listing:", err);
@@ -88,7 +90,7 @@ app.put("/listings/:id", async (req, res) => {
 	let { id } = req.params;
 	try {
         console.log(req.body.listing);
-		const updatedListing = await Listing.findByIdAndUpdate(id, req.body.listing);
+		await Listing.findByIdAndUpdate(id, req.body.listing);
 		res.redirect(`/listings/${id}`);
 	} catch (err) {
 		console.error("Error updating listing:", err);
@@ -112,5 +114,3 @@ const port = 8080;
 app.listen(port, () => {
 	console.log(`Server is listening on port ${port}`);
 });
-
-//TODO: add notes about working and steps and syntax too

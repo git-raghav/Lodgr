@@ -45,8 +45,6 @@ const listingSchema = new mongoose.Schema({
 	country: {
 		type: String,
 		required: true,
-		minLength: 2,
-		maxLength: 100,
 	},
 });
 

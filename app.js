@@ -2,12 +2,13 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const Listing = require("./models/listing.js"); // importing the Listing model
+const Review = require("./models/review.js");
 const path = require("path");
 const methodOverride = require("method-override"); // for PUT and DELETE requests
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js"); // utility to wrap async functions for error handling
 const ExpressError = require("./utils/ExpressError.js"); // custom error class for Express
-const { listingSchema } = require("./schema.js"); // importing the Joi schema for validation
+const { listingSchema, reviewSchema } = require("./schema.js"); // importing the Joi schema for validation
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -35,6 +36,17 @@ app.get("/", (req, res) => {
 /* --------------------------------------------- Middleware to validate listing data using Joi schema --------------------------------------------- */
 const validateListing = (req, res, next) => {
     let { error } = listingSchema.validate(req.body);
+    if (error) {
+        // If validation fails, throw an error
+        throw new ExpressError(400, error);
+    } else {
+        next();
+    }
+}
+
+/* --------------------------------------------- Middleware to validate review data using Joi schema --------------------------------------------- */
+const validateReview = (req, res, next) => {
+    let { error } = reviewSchema.validate(req.body);
     if (error) {
         // If validation fails, throw an error
         throw new ExpressError(400, error);
@@ -97,6 +109,19 @@ app.delete("/listings/:id", wrapAsync(async (req, res) => {
 		res.redirect("/listings");
 	})
 );
+
+/* --------------------------------------- posts a new review to a listing and redirects to the listing page -------------------------------------- */
+app.post("/listings/:id/reviews", validateReview, wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    const listing = await Listing.findById(id);
+    const newReview = new Review(req.body.review);
+    // console.log(listing);
+    // console.log(newReview);
+    listing.reviews.push(newReview);//pushing the new review's id to the listing's reviews array
+    await newReview.save();
+    await listing.save();
+    res.redirect(`/listings/${id}`);
+}));
 
 // if no above route matches, this middleware will be called
 app.all("*", (req, res, next) => {

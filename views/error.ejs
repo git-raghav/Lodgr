@@ -1,0 +1,9 @@
+<% layout("/layouts/boilerplate") %>
+<div class="row error-container">
+    <div class="alert col-6 offset-3" role="alert">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <h2 class="alert-heading">Oops! Something went wrong</h2>
+        <h4>Error <%= statusCode %></h4>
+        <p> <%= message %></p>
+    </div>
+</div>

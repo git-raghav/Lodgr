@@ -71,7 +71,8 @@ app.get("/listings/new", (req, res) => {
 /* ----- route to render a particular listing (using id) user clicked on ---- */
 app.get("/listings/:id", wrapAsync(async (req, res) => {
 		let { id } = req.params;
-		const listing = await Listing.findById(id);
+		const listing = await Listing.findById(id).populate("reviews");
+        // console.log(listing);
 		res.render("listings/show.ejs", { listing });
 	})
 );

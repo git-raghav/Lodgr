@@ -255,3 +255,29 @@ h3 {
     fill: var(--fill);
   }
 }
+/* review cards */
+.review-card {
+    background-color: #f9f9f9 !important;
+    margin-bottom: 2rem !important;
+    padding: 15px !important;
+}
+.review-body {
+    margin-top: 0px !important;
+}
+.review-title {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #222222 !important;
+}
+.review-date {
+    font-size: 12px !important;
+}
+.review-text {
+    font-size: 15px !important;
+    color: #222222 !important;
+}
+.review-author {
+    font-size: 15px !important;
+    color: grey !important;
+    font-weight: 500 !important;
+}

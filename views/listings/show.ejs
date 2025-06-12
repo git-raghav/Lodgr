@@ -80,22 +80,35 @@
 					</svg>
 				</label>
 			</div>
-            <div class="mb-3">
-                <label for="comment" class="form-label"></label>
+			<div class="mb-3">
+				<label for="comment" class="form-label"></label>
 				<textarea
 					id="comment"
 					name="review[comment]"
 					class="form-control"
 					placeholder="Write your review here in not more than 2000 words..."
-                    minlength="1"
-                    maxlength="2000"
-                    required
-                    rows="4"
+					minlength="1"
+					maxlength="2000"
+					required
+					rows="4"
 				></textarea>
-                <div class="valid-feedback">Looks good!</div>
+				<div class="valid-feedback">Looks good!</div>
 				<div class="invalid-feedback">Please enter a valid review.</div>
-            </div>
-            <button type="submit" class="btn btn-dark mb-5">Submit</button>
+			</div>
+			<button type="submit" class="btn btn-dark mb-5">Submit</button>
 		</form>
+	</div>
+	<div class="col-8 offset-2 border-top">
+		<h3 class="mt-3"><b>All Reviews</b></h3>
+		<% for(let review of listing.reviews) { %>
+		<div class="card review-card mt-4">
+			<div class="card-body review-body">
+				<h5 class="card-title review-title"><b>Rating:</b> <%= review.rating %>.0</h5>
+				<p class="card-text review-date mb-2"><%= review.createdAt.toString().split(" ").slice(1,4).join("/") %></p>
+				<p class="card-text review-text"><%= review.comment %></p>
+				<h6 class="card-subtitle review-author mt-1"><i>- Bob</i></h6>
+			</div>
+		</div>
+		<% } %>
 	</div>
 </div>

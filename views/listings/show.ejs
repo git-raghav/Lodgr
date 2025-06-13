@@ -107,6 +107,13 @@
 				<p class="card-text review-date mb-2"><%= review.createdAt.toString().split(" ").slice(1,4).join("/") %></p>
 				<p class="card-text review-text"><%= review.comment %></p>
 				<h6 class="card-subtitle review-author mt-1"><i>- Bob</i></h6>
+                <form
+                    action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+					method="POST"
+					onsubmit="return confirm('Are you sure you want to delete this review?');"
+                >
+                    <button type="submit" class="btn btn-sm btn-dark mt-3">Delete</button>
+                </form>
 			</div>
 		</div>
 		<% } %>

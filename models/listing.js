@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Review = require("./review.js");
 
 const listingSchema = new mongoose.Schema({
 	title: {
@@ -52,6 +53,14 @@ const listingSchema = new mongoose.Schema({
 			ref: "Review",
 		},
 	],
+});
+
+//this post middleware will run after a document is deleted to delete its reviews
+//findbyidanddelete indirectly calls findOneAndDelete and when findOneAndDelete operation is done on listingSchema this middleware will run automatically
+listingSchema.post("findOneAndDelete", async (listing) => {
+    if(listing.reviews.length > 0) {
+        await Review.deleteMany({ _id: { $in: listing.reviews } });
+    }
 });
 
 const Listing = mongoose.model("Listing", listingSchema);

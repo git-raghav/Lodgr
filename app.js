@@ -124,6 +124,15 @@ app.post("/listings/:id/reviews", validateReview, wrapAsync(async (req, res) => 
     res.redirect(`/listings/${id}`);
 }));
 
+/* ---------------------------------- deletes a review from a listing and redirects to the listing page ---------------------------------- */
+app.delete("/listings/:id/reviews/:reviewId", wrapAsync(async (req, res) => {
+		let { id, reviewId } = req.params;
+        await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });//removes reviewid from listing array
+		await Review.findByIdAndDelete(reviewId);//deletes the review
+		res.redirect(`/listings/${id}`);
+	})
+);
+
 // if no above route matches, this middleware will be called
 app.all("*", (req, res, next) => {
 	next(new ExpressError(404, "Page Not Found"));

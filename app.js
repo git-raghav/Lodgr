@@ -1,14 +1,12 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const Listing = require("./models/listing.js"); // importing the Listing model
-const Review = require("./models/review.js");
 const path = require("path");
 const methodOverride = require("method-override"); // for PUT and DELETE requests
 const ejsMate = require("ejs-mate");
-const wrapAsync = require("./utils/wrapAsync.js"); // utility to wrap async functions for error handling
 const ExpressError = require("./utils/ExpressError.js"); // custom error class for Express
-const { listingSchema, reviewSchema } = require("./schema.js"); // importing the Joi schema for validation
+const listings = require("./routes/listing.js");// importing the listing routes
+const reviews = require("./routes/review.js");// importing the review routes
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -33,105 +31,9 @@ app.get("/", (req, res) => {
 	res.send("Hi Iam Root");
 });
 
-/* --------------------------------------------- Middleware to validate listing data using Joi schema --------------------------------------------- */
-const validateListing = (req, res, next) => {
-    let { error } = listingSchema.validate(req.body);
-    if (error) {
-        // If validation fails, throw an error
-        throw new ExpressError(400, error);
-    } else {
-        next();
-    }
-}
-
-/* --------------------------------------------- Middleware to validate review data using Joi schema --------------------------------------------- */
-const validateReview = (req, res, next) => {
-    let { error } = reviewSchema.validate(req.body);
-    if (error) {
-        // If validation fails, throw an error
-        throw new ExpressError(400, error);
-    } else {
-        next();
-    }
-}
-
-/* ---------------------- route to render all listings ---------------------- */
-app.get("/listings", wrapAsync(async (req, res) => {
-		const allListings = await Listing.find({});
-		// console.log(allListings);
-		res.render("listings/index.ejs", { allListings });
-	})
-);
-
-/* ------------ route to render the form to create a new listing ------------ */
-app.get("/listings/new", (req, res) => {
-	res.render("listings/new.ejs");
-});
-
-/* ----- route to render a particular listing (using id) user clicked on ---- */
-app.get("/listings/:id", wrapAsync(async (req, res) => {
-		let { id } = req.params;
-		const listing = await Listing.findById(id).populate("reviews");
-        // console.log(listing);
-		res.render("listings/show.ejs", { listing });
-	})
-);
-
-/* ------------------- posts a new listing to the database and redirects to the all listings page ------------------- */
-app.post("/listings", validateListing, wrapAsync(async (req, res) => {
-		const newListing = new Listing(req.body.listing);
-		await newListing.save();
-		res.redirect("/listings");
-	})
-);
-
-/* --------------------------------------------------------- gets a form to edit a listing -------------------------------------------------------- */
-app.get("/listings/:id/edit", wrapAsync(async (req, res) => {
-		let { id } = req.params;
-		const listing = await Listing.findById(id);
-		// console.log(listing);
-		res.render("listings/edit.ejs", { listing });
-	})
-);
-
-/* ----------------------------------- updates a listing in the database and redirects to the listing page ----------------------------------- */
-app.put("/listings/:id", validateListing, wrapAsync(async (req, res) => {
-		let { id } = req.params;
-		// console.log(req.body.listing);
-		await Listing.findByIdAndUpdate(id, req.body.listing);
-		res.redirect(`/listings/${id}`);
-	})
-);
-
-/* ---------------------------------- deletes a listing from the database and redirects to the all listings page ---------------------------------- */
-app.delete("/listings/:id", wrapAsync(async (req, res) => {
-		let { id } = req.params;
-		await Listing.findByIdAndDelete(id);
-		res.redirect("/listings");
-	})
-);
-
-/* --------------------------------------- posts a new review to a listing and redirects to the listing page -------------------------------------- */
-app.post("/listings/:id/reviews", validateReview, wrapAsync(async (req, res) => {
-    let { id } = req.params;
-    const listing = await Listing.findById(id);
-    const newReview = new Review(req.body.review);
-    // console.log(listing);
-    // console.log(newReview);
-    listing.reviews.push(newReview);//pushing the new review's id to the listing's reviews array
-    await newReview.save();
-    await listing.save();
-    res.redirect(`/listings/${id}`);
-}));
-
-/* ---------------------------------- deletes a review from a listing and redirects to the listing page ---------------------------------- */
-app.delete("/listings/:id/reviews/:reviewId", wrapAsync(async (req, res) => {
-		let { id, reviewId } = req.params;
-        await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });//removes reviewid from listing array
-		await Review.findByIdAndDelete(reviewId);//deletes the review
-		res.redirect(`/listings/${id}`);
-	})
-);
+// routes
+app.use("/listings", listings);
+app.use("/listings/:id/reviews", reviews);
 
 // if no above route matches, this middleware will be called
 app.all("*", (req, res, next) => {

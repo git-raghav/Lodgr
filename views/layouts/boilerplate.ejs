@@ -28,8 +28,10 @@
 	<body>
 		<div class="page-wrapper">
 			<%- include("../includes/navbar.ejs") %>
-			<main class="container content"><%- body %></main>
-
+			<main class="container content">
+                <%- include("../includes/flash.ejs") %>
+                <%- body %>
+            </main>
 			<%- include("../includes/footer.ejs") %>
 		</div>
 		<script

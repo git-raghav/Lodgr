@@ -16,10 +16,33 @@ h3 {
 	flex-direction: column;
 	min-height: 100vh;
 }
-
 .content {
 	flex: 1;
 }
+/* scrollbar */
+/* Applies to entire page */
+::-webkit-scrollbar {
+  width: 7px;               /* width of vertical scrollbar */
+  height: 7px;              /* height of horizontal scrollbar */
+}
+
+/* Track (background) */
+::-webkit-scrollbar-track {
+  background: #fff;
+  border-radius: 10px;
+}
+
+/* Handle (thumb) */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 /* navigation */
 .navbar {
 	/* height: 5rem; */
@@ -280,4 +303,83 @@ h3 {
     font-size: 15px !important;
     color: grey !important;
     font-weight: 500 !important;
+}
+/* flash message */
+.alert-box {
+  height: 70px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  padding: 10px 15px;
+  background-color: #ffffff;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 15px;
+  margin-bottom: 1rem !important;
+}
+.alert-wave-success {
+  position: absolute;
+  transform: rotate(90deg);
+  left: -31px;
+  top: 32px;
+  width: 80px;
+  fill: #04e4003a;
+}
+.alert-icon-container-success {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #04e40048;
+  border-radius: 50%;
+  margin-left: 8px;
+}
+.alert-icon-success {
+  width: 17px;
+  height: 17px;
+  color: #269b24;
+}
+.alert-wave-error {
+  position: absolute;
+  transform: rotate(90deg);
+  left: -31px;
+  top: 32px;
+  width: 80px;
+  fill: #fc0c0c3a;
+}
+.alert-icon-container-error {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fc0c0c48;
+  border-radius: 50%;
+  margin-left: 8px;
+}
+.alert-icon-error {
+  width: 17px;
+  height: 17px;
+  color: #d10d0d;
+}
+.message-text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex-grow: 1;
+}
+.sub-text {
+  margin: 0;
+  cursor: default;
+  font-size: 15px;
+  color: #555;
+  font-weight: 500;
+}
+.btn-close {
+    transform: scale(0.8);
 }

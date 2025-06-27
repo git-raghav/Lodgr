@@ -5,8 +5,10 @@ const path = require("path");
 const methodOverride = require("method-override"); // for PUT and DELETE requests
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js"); // custom error class for Express
-const listings = require("./routes/listing.js");// importing the listing routes
-const reviews = require("./routes/review.js");// importing the review routes
+const listings = require("./routes/listing.js"); // importing the listing routes
+const reviews = require("./routes/review.js"); // importing the review routes
+const session = require("express-session");
+const flash = require("connect-flash"); // for flash messages
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -14,6 +16,21 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate); // using ejsMate for layout support in EJS
+
+//session handler
+app.use(
+	session({
+		secret: "mysupersecretcode",
+		resave: false,
+		saveUninitialized: true,
+		cookie: {
+			expires: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
+			maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+            httpOnly: true, // prevents client-side JavaScript from accessing the cookie
+		},
+	})
+);
+app.use(flash());
 
 /* -------------------------- connecting to MongoDB ------------------------- */
 const MONGO_URL = "mongodb://127.0.0.1:27017/lodgr";
@@ -29,6 +46,13 @@ async function main() {
 
 app.get("/", (req, res) => {
 	res.send("Hi Iam Root");
+});
+
+// Middleware to expose flash messages to views
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    next();
 });
 
 // routes

@@ -43,56 +43,65 @@
 			<div class="row">
 				<div class="mb-3 col-md-4">
 					<label for="maxGuests" class="form-label">Max Guests:</label>
-					<input
-						type="number"
-						id="maxGuests"
-						name="listing[maxGuests]"
-						min="1"
-						max="20"
-						value="<%= listing.maxGuests %>"
-						class="form-control"
-						required
-					/>
-                    <div class="valid-feedback">Looks good!</div>
-				    <div class="invalid-feedback">Please enter a valid number of guests.</div>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text"><i class="fa-solid fa-person"></i></span>
+    					<input
+    						type="number"
+    						id="maxGuests"
+    						name="listing[maxGuests]"
+    						min="1"
+    						max="20"
+    						value="<%= listing.maxGuests %>"
+    						class="form-control"
+    						required
+    					/>
+    					<div class="valid-feedback">Looks good!</div>
+    					<div class="invalid-feedback">Please enter a valid number of guests.</div>
+                    </div>
 				</div>
 				<div class="mb-3 col-md-8">
 					<label for="price" class="form-label">Price per night (in &#8377;):</label>
-					<input
-						type="number"
-						id="price"
-						name="listing[price]"
-						min="0"
-						class="form-control"
-						value="<%= listing.price %>"
-						required
-                        max="100000"
-					/>
-                    <div class="valid-feedback">Looks good!</div>
-				    <div class="invalid-feedback">Please enter a valid price.</div>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text"><i class="fa-solid fa-indian-rupee-sign"></i></span>
+    					<input
+    						type="number"
+    						id="price"
+    						name="listing[price]"
+    						min="0"
+    						class="form-control"
+    						value="<%= listing.price %>"
+    						required
+    						max="100000"
+    					/>
+    					<div class="valid-feedback">Looks good!</div>
+    					<div class="invalid-feedback">Please enter a valid price.</div>
+                    </div>
 				</div>
 			</div>
 			<div class="mb-3">
 				<label for="image" class="form-label">Image URL:</label>
-				<input type="text" id="image" name="listing[image]" class="form-control" value="<%= listing.image %>" required/>
-                <div class="valid-feedback">Looks good!</div>
+				<input type="text" id="image" name="listing[image]" class="form-control" value="<%= listing.image %>" required />
+				<div class="valid-feedback">Looks good!</div>
 				<div class="invalid-feedback">Please enter a valid image URL.</div>
 			</div>
 			<div class="row">
 				<div class="mb-3 col-md-7">
 					<label for="location" class="form-label">Location:</label>
-					<input
-						type="text"
-						id="location"
-						name="listing[location]"
-						value="<%= listing.location %>"
-						class="form-control"
-						required
-                        minlength="2"
-                        maxlength="150"
-					/>
-                    <div class="valid-feedback">Looks good!</div>
-				    <div class="invalid-feedback">Please enter a valid location.</div>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
+    					<input
+    						type="text"
+    						id="location"
+    						name="listing[location]"
+    						value="<%= listing.location %>"
+    						class="form-control"
+    						required
+    						minlength="2"
+    						maxlength="150"
+    					/>
+    					<div class="valid-feedback">Looks good!</div>
+    					<div class="invalid-feedback">Please enter a valid location.</div>
+                    </div>
 				</div>
 				<div class="mb-5 col-md-5">
 					<label for="country" class="form-label">Country</label>

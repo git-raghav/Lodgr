@@ -3,22 +3,10 @@ const router = express.Router({ mergeParams: true });//if there is something in 
 const Listing = require("../models/listing.js"); // importing the Listing model
 const Review = require("../models/review.js"); // importing the review model
 const wrapAsync = require("../utils/wrapAsync.js"); // utility to wrap async functions for error handling
-const ExpressError = require("../utils/ExpressError.js"); // custom error class for Express
-const { reviewSchema } = require("../schema.js"); // importing the Joi schema for validation
-
-/* --------------------------------------------- Middleware to validate review data using Joi schema --------------------------------------------- */
-const validateReview = (req, res, next) => {
-    let { error } = reviewSchema.validate(req.body);
-    if (error) {
-        // If validation fails, throw an error
-        throw new ExpressError(400, error);
-    } else {
-        next();
-    }
-}
+const { isLoggedIn, validateReview } = require("../middleware.js");
 
 /* --------------------------------------- posts a new review to a listing and redirects to the listing page -------------------------------------- */
-router.post("/", validateReview, wrapAsync(async (req, res) => {
+router.post("/", isLoggedIn, validateReview, wrapAsync(async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id);
     const newReview = new Review(req.body.review);
@@ -32,7 +20,7 @@ router.post("/", validateReview, wrapAsync(async (req, res) => {
 }));
 
 /* ---------------------------------- deletes a review from a listing and redirects to the listing page ---------------------------------- */
-router.delete("/:reviewId", wrapAsync(async (req, res) => {
+router.delete("/:reviewId", isLoggedIn, wrapAsync(async (req, res) => {
 		let { id, reviewId } = req.params;
         await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });//removes reviewid from listing array
 		await Review.findByIdAndDelete(reviewId);//deletes the review

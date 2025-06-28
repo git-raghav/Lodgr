@@ -15,8 +15,27 @@ module.exports.listingSchema = Joi.object({
 });
 
 module.exports.reviewSchema = Joi.object({
-    review: Joi.object({
-        rating: Joi.number().min(1).max(5).required(),
-        comment: Joi.string().min(1).max(2000).required(),
-    }).required(),
+	review: Joi.object({
+		rating: Joi.number().min(1).max(5).required(),
+		comment: Joi.string().min(1).max(2000).required(),
+	}).required(),
 });
+
+module.exports.userSchemaSignup = Joi.object({
+	username: Joi.string()
+		.pattern(/^[a-zA-Z0-9_]+$/)
+		.min(3)
+		.max(30)
+		.required(),
+	email: Joi.string().min(5).max(100).email().required(),
+	password: Joi.string()
+		.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/)
+		.min(8)
+		.max(100)
+		.required(),
+}).required();
+
+module.exports.userSchemaLogin = Joi.object({
+	username: Joi.string().required(),
+	password: Joi.string().required(),
+}).required();

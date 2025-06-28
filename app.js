@@ -1,14 +1,21 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+
 const path = require("path");
 const methodOverride = require("method-override"); // for PUT and DELETE requests
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js"); // custom error class for Express
-const listings = require("./routes/listing.js"); // importing the listing routes
-const reviews = require("./routes/review.js"); // importing the review routes
 const session = require("express-session");
 const flash = require("connect-flash"); // for flash messages
+const passport = require("passport"); // for authentication
+const LocalStrategy = require("passport-local");
+
+const listingRouter = require("./routes/listing.js"); // importing the listing routes
+const reviewRouter = require("./routes/review.js"); // importing the review routes
+const userRouter = require("./routes/user.js"); // importing the review routes
+
+const User = require("./models/user.js"); // importing the User model
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -32,6 +39,13 @@ app.use(
 );
 app.use(flash());
 
+// Passport.js configuration and also it uses session so we have to use passport just after session
+app.use(passport.initialize());//Initializes Passport middleware.
+app.use(passport.session());//Enables persistent login sessions using cookies and express-session.
+passport.use(new LocalStrategy(User.authenticate())); // Tells Passport to use the local strategy (username + password).User.authenticate() is provided by passport-local-mongoose.
+passport.serializeUser(User.serializeUser()); // These handle how user data is stored in and retrieved from the session.
+passport.deserializeUser(User.deserializeUser()); // These handle how user data is stored in and retrieved from the session.
+
 /* -------------------------- connecting to MongoDB ------------------------- */
 const MONGO_URL = "mongodb://127.0.0.1:27017/lodgr";
 main()
@@ -44,10 +58,6 @@ async function main() {
 	await mongoose.connect(MONGO_URL);
 }
 
-app.get("/", (req, res) => {
-	res.send("Hi Iam Root");
-});
-
 // Middleware to expose flash messages to views
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
@@ -56,8 +66,9 @@ app.use((req, res, next) => {
 });
 
 // routes
-app.use("/listings", listings);
-app.use("/listings/:id/reviews", reviews);
+app.use("/", userRouter);
+app.use("/listings", listingRouter);
+app.use("/listings/:id/reviews", reviewRouter);
 
 // if no above route matches, this middleware will be called
 app.all("*", (req, res, next) => {

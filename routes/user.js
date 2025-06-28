@@ -2,31 +2,8 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user.js"); // importing the User model
 const wrapAsync = require("../utils/wrapAsync.js"); // utility to wrap async functions for error handling
-const ExpressError = require("../utils/ExpressError.js"); // custom error class for Express
-const { userSchemaSignup, userSchemaLogin } = require("../schema.js"); // importing the Joi schema for validation
 const passport = require("passport"); // for authentication
-
-/* --------------------------------------------- Middleware to validate user signup data using Joi schema --------------------------------------------- */
-const validateUserSignup = (req, res, next) => {
-	let { error } = userSchemaSignup.validate(req.body);
-	if (error) {
-		// If validation fails, throw an error
-		throw new ExpressError(400, error);
-	} else {
-		next();
-	}
-};
-
-/* --------------------------------------------- Middleware to validate user login data using Joi schema --------------------------------------------- */
-const validateUserLogin = (req, res, next) => {
-	let { error } = userSchemaLogin.validate(req.body);
-	if (error) {
-		// If validation fails, throw an error
-		throw new ExpressError(400, error);
-	} else {
-		next();
-	}
-};
+const { validateUserSignup, validateUserLogin } = require("../middleware.js");
 
 /* ---------------------- route to render signup page ---------------------- */
 router.get("/signup", (req, res) => {

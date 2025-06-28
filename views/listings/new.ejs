@@ -12,8 +12,8 @@
 					placeholder="Enter a catchy title of not more than 2 - 100 characters."
 					class="form-control"
 					required
-                    minlength="2"
-                    maxlength="100"
+					minlength="2"
+					maxlength="100"
 				/>
 				<div class="valid-feedback">Looks good!</div>
 				<div class="invalid-feedback">Please enter a valid title.</div>
@@ -26,10 +26,10 @@
 					class="form-control"
 					placeholder="Enter a description of not more than 10 - 5000 characters."
 					required
-                    minlength="10"
-                    maxlength="5000"
+					minlength="10"
+					maxlength="5000"
 				></textarea>
-                <div class="valid-feedback">Looks good!</div>
+				<div class="valid-feedback">Looks good!</div>
 				<div class="invalid-feedback">Please enter a valid description.</div>
 			</div>
 			<div class="mb-3">
@@ -41,41 +41,47 @@
 					placeholder="Enter a comma-separated list of amenities."
 					class="form-control"
 					required
-                    pattern="^([a-zA-Z0-9\s]+,?\s*)+$"
+					pattern="^([a-zA-Z0-9\s]+,?\s*)+$"
 				/>
-                <div class="valid-feedback">Looks good!</div>
+				<div class="valid-feedback">Looks good!</div>
 				<div class="invalid-feedback">Please enter a valid list of amenities.</div>
 			</div>
 			<div class="row">
 				<div class="mb-3 col-md-4">
 					<label for="maxGuests" class="form-label">Max Guests:</label>
-					<input
-						type="number"
-						id="maxGuests"
-						name="listing[maxGuests]"
-						min="1"
-						max="20"
-						placeholder="Enter a number between 1 - 20"
-						class="form-control"
-						required
-					/>
-                    <div class="valid-feedback">Looks good!</div>
-				    <div class="invalid-feedback">Please enter a valid number of guests.</div>
+					<div class="input-group has-validation">
+                        <span class="input-group-text"><i class="fa-solid fa-person"></i></span>
+					    <input
+    						type="number"
+    						id="maxGuests"
+    						name="listing[maxGuests]"
+    						min="1"
+    						max="20"
+    						placeholder="1 - 20"
+    						class="form-control"
+    						required
+    					/>
+    					<div class="valid-feedback">Looks good!</div>
+    					<div class="invalid-feedback">Please enter a valid number of guests.</div>
+					</div>
 				</div>
 				<div class="mb-3 col-md-8">
 					<label for="price" class="form-label">Price per night (in &#8377;):</label>
-					<input
-						type="number"
-						id="price"
-						name="listing[price]"
-						min="0"
-						class="form-control"
-						placeholder="Enter a number between &#8377;0 - 10 lacs"
-						required
-                        max="100000"
-					/>
-                    <div class="valid-feedback">Looks good!</div>
-				    <div class="invalid-feedback">Please enter a valid price.</div>
+					<div class="input-group has-validation">
+                        <span class="input-group-text"><i class="fa-solid fa-indian-rupee-sign"></i></span>
+					    <input
+    						type="number"
+    						id="price"
+    						name="listing[price]"
+    						min="0"
+    						class="form-control"
+    						placeholder="Enter a number between &#8377;0 - 10 lacs"
+    						required
+    						max="100000"
+    					/>
+    					<div class="valid-feedback">Looks good!</div>
+    					<div class="invalid-feedback">Please enter a valid price.</div>
+					</div>
 				</div>
 			</div>
 			<div class="mb-3">
@@ -85,18 +91,21 @@
 			<div class="row">
 				<div class="mb-3 col-md-7">
 					<label for="location" class="form-label">Location:</label>
-					<input
-						type="text"
-						id="location"
-						name="listing[location]"
-						placeholder="Enter a location of not more than 2 - 150 characters."
-						class="form-control"
-						required
-                        minlength="2"
-                        maxlength="150"
-					/>
-                    <div class="valid-feedback">Looks good!</div>
-				    <div class="invalid-feedback">Please enter a valid location.</div>
+					<div class="input-group has-validation">
+						<span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
+						<input
+							type="text"
+							id="location"
+							name="listing[location]"
+							placeholder="Enter a location of not more than 2 - 150 characters."
+							class="form-control"
+							required
+							minlength="2"
+							maxlength="150"
+						/>
+						<div class="valid-feedback">Looks good!</div>
+						<div class="invalid-feedback">Please enter a valid location.</div>
+					</div>
 				</div>
 				<div class="mb-5 col-md-5">
 					<label for="country" class="form-label">Country</label>

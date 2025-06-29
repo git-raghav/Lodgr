@@ -20,7 +20,7 @@ router.get("/new", isLoggedIn, (req, res) => {
 /* ----- route to render a particular listing (using id) user clicked on ---- */
 router.get("/:id", wrapAsync(async (req, res) => {
 		let { id } = req.params;
-		const listing = await Listing.findById(id).populate("reviews");
+		const listing = await Listing.findById(id).populate("reviews").populate("owner");
         // console.log(listing);
         if(!listing) {
             req.flash("error", "Listing not found!");
@@ -33,6 +33,8 @@ router.get("/:id", wrapAsync(async (req, res) => {
 /* ------------------- posts a new listing to the database and redirects to the all listings page ------------------- */
 router.post("/", isLoggedIn, validateListing, wrapAsync(async (req, res) => {
 		const newListing = new Listing(req.body.listing);
+        newListing.owner = req.user._id; // setting the owner of the listing to the current user
+        // console.log(newListing);
 		await newListing.save();
         req.flash("success", "New listing created successfully!");
 		res.redirect("/listings");

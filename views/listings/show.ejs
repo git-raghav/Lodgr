@@ -15,7 +15,10 @@
 				<li class="list-group-item"><b>Price:</b> &#8377;<%= listing.price.toLocaleString("en-IN") %> per night</li>
 				<li class="list-group-item"><b>Location:</b> <%= listing.location %></li>
 				<li class="list-group-item"><b>Country:</b> <%= listing.country %></li>
+				<li class="list-group-item"><b>Owned By:</b> <i><%= listing.owner.username %></i></li>
+				<li class="list-group-item"><b>Owner Email:</b> <i><%= listing.owner.email %></i></li>
 			</ul>
+            <% if(currentUser && currentUser._id.equals(listing.owner._id)) { %>
 			<div class="card-body show-footer">
 				<form action="/listings/<%= listing._id %>/edit" method="GET">
 					<button class="btn btn-dark mb-3">Edit this Listing</button>
@@ -28,6 +31,7 @@
 					<button class="btn btn-danger mb-3">Delete this Listing</button>
 				</form>
 			</div>
+            <% } %>
 		</div>
 	</div>
 	<div class="col-8 offset-2 border-top">

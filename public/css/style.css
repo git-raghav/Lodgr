@@ -63,6 +63,17 @@ h3 {
 .navbar-nav {
 	font-weight: 500 !important;
 }
+.user-botton:hover {
+    color: gray !important;
+}
+.user-dropdown-item {
+    font-weight: 500 !important;
+    font-size: 14px !important;
+}
+.dropdown-menu .dropdown-item:active {
+    background-color: #f1f1f1 !important;
+    color: #000 !important;
+}
 /* footer */
 .f-info-links a {
 	color: #222222;

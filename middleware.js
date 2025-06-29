@@ -47,9 +47,19 @@ module.exports.validateUserLogin = (req, res, next) => {
 
 /* --------------------------------------------- Middleware to check if user is logged in --------------------------------------------- */
 module.exports.isLoggedIn = (req, res, next) => {
+    // console.log(req.originalUrl);
     if(!req.isAuthenticated()) {
+        req.session.redirectUrl = req.originalUrl; // store the original URL to redirect after login but passport dele
         req.flash("error", "You must be logged in to perform this action!");
         return res.redirect("/login");
+    }
+    next();
+};
+
+/* --------------------------------------------- Middleware to save redirect URL --------------------------------------------- */
+module.exports.saveRedirectUrl = (req, res, next) => {
+    if(req.session.redirectUrl) {
+        res.locals.redirectUrl = req.session.redirectUrl;
     }
     next();
 };

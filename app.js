@@ -1,3 +1,6 @@
+if(process.env.NODE_ENV !== "production") {
+    require("dotenv").config(); // load environment variables from .env file in development mode
+}
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -27,7 +30,7 @@ app.engine("ejs", ejsMate); // using ejsMate for layout support in EJS
 //session handler
 app.use(
 	session({
-		secret: "mysupersecretcode",
+		secret: process.env.SESSION_SECRET,
 		resave: false,
 		saveUninitialized: true,
 		cookie: {
@@ -47,7 +50,7 @@ passport.serializeUser(User.serializeUser()); // These handle how user data is s
 passport.deserializeUser(User.deserializeUser()); // These handle how user data is stored in and retrieved from the session.
 
 /* -------------------------- connecting to MongoDB ------------------------- */
-const MONGO_URL = "mongodb://127.0.0.1:27017/lodgr";
+const MONGO_URL = process.env.MONGO_URL;
 main()
 	.then(() => {
 		console.log("Connected to MongoDB");

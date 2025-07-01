@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-8 offset-2">
 		<h3><b>Edit Listing</b></h3>
-		<form action="/listings/<%= listing._id %>?_method=PUT" method="POST" class="new-form needs-validation" novalidate>
+		<form action="/listings/<%= listing._id %>?_method=PUT" method="POST" class="new-form needs-validation" novalidate enctype="multipart/form-data">
 			<div class="mb-3">
 				<label for="title" class="form-label">Title:</label>
 				<input
@@ -78,11 +78,16 @@
                     </div>
 				</div>
 			</div>
+            <div class="mb-3">
+                Original Image: <br>
+				<img src="<%= originalImageUrl %>" alt="Listing Image" style="height: 12rem">
+			</div>
 			<div class="mb-3">
-				<label for="image" class="form-label">Image URL:</label>
-				<input type="text" id="image" name="listing[image]" class="form-control" value="<%= listing.image %>" required />
-				<div class="valid-feedback">Looks good!</div>
-				<div class="invalid-feedback">Please enter a valid image URL.</div>
+				<label for="image" class="form-label">Upload Image:</label>
+				<div class="input-group has-validation">
+                    <span class="input-group-text"><i class="fa-solid fa-camera"></i></span>
+    				<input type="file" id="image" name="listing[image]" class="form-control" />
+                </div>
 			</div>
 			<div class="row">
 				<div class="mb-3 col-md-7">
@@ -106,7 +111,6 @@
 				<div class="mb-5 col-md-5">
 					<label for="country" class="form-label">Country</label>
 					<select id="country" name="listing[country]" class="form-control" required>
-						<option>Select</option>
 						<option value="Afghanistan">Afghanistan</option>
 						<option value="Åland Islands">Åland Islands</option>
 						<option value="Albania">Albania</option>
@@ -207,7 +211,7 @@
 						<option value="Hong Kong">Hong Kong</option>
 						<option value="Hungary">Hungary</option>
 						<option value="Iceland">Iceland</option>
-						<option value="India">India</option>
+						<option value="India" selected>India</option>
 						<option value="Indonesia">Indonesia</option>
 						<option value="Iran, Islamic Republic of">Iran, Islamic Republic of</option>
 						<option value="Iraq">Iraq</option>

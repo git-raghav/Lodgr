@@ -1,8 +1,12 @@
+if(process.env.NODE_ENV !== "production") {
+    require("dotenv").config({ path: "../.env" }); // load environment variables from .env file in development mode
+}
 const mongoose = require('mongoose');
 const Listing = require("../models/listing.js");// Import the Listing model
 const initData = require('./data.js');// Import the sample data
 
-const MONGO_URL= "mongodb://127.0.0.1:27017/lodgr";
+const MONGO_URL= process.env.ATLAS_URL;
+
 main()
     .then(() => {
         console.log("Connected to MongoDB");

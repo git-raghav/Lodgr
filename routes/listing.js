@@ -11,10 +11,13 @@ const {
 	updateListing,
 	deleteListing,
 } = require("../controllers/listing.js");
+const multer = require("multer"); // importing multer for handling file uploads
+const { storage } = require("../cloudConfig.js");
+const upload = multer({ storage }); // setting the destination for uploaded files
 
 /* ---------------------- route to render all listings ---------------------- */
 /* ------------------- posts a new listing to the database and redirects to the all listings page ------------------- */
-router.route("/").get(wrapAsync(index)).post(isLoggedIn, validateListing, wrapAsync(createListing));
+router.route("/").get(wrapAsync(index)).post(isLoggedIn, upload.single("listing[image]"), validateListing, wrapAsync(createListing));
 
 /* ------------ route to render the form to create a new listing ------------ */
 router.get("/new", isLoggedIn, renderNewForm);
@@ -25,7 +28,7 @@ router.get("/new", isLoggedIn, renderNewForm);
 router
 	.route("/:id")
 	.get(wrapAsync(showListing))
-	.put(isLoggedIn, isOwner, validateListing, wrapAsync(updateListing))
+	.put(isLoggedIn, isOwner, upload.single("listing[image]"), validateListing, wrapAsync(updateListing))
 	.delete(isLoggedIn, isOwner, wrapAsync(deleteListing));
 
 /* ---------------------------- gets a form to edit a listing ---------------------------------- */

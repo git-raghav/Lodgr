@@ -47,7 +47,7 @@ h3 {
 .navbar {
 	/* height: 5rem; */
 	background-color: #fff;
-	margin-bottom: 2rem;
+	margin-bottom: 1.5rem;
 }
 .nav-link:hover {
 	color: #222222 !important;
@@ -64,16 +64,36 @@ h3 {
 	font-weight: 500 !important;
 }
 .user-botton:hover {
-    color: gray !important;
+	color: gray !important;
 }
 .user-dropdown-item {
-    font-weight: 500 !important;
-    font-size: 14px !important;
+	font-weight: 500 !important;
+	font-size: 14px !important;
 }
 .dropdown-menu .dropdown-item:active {
-    background-color: #f1f1f1 !important;
-    color: #000 !important;
+	background-color: #f1f1f1 !important;
+	color: #000 !important;
 }
+.navbar-search {
+    margin-left: 0.9rem !important;
+}
+.btn-search i {
+    display: inline;
+    margin-right: 0.5rem;
+}
+.btn-search {
+    border-radius: 25px !important;
+    padding: 0 1rem 0 1rem !important;
+    font-weight: 500 !important;
+    font-size: 12px !important;
+}
+.search-bar {
+    border-radius: 25px !important;
+    padding: 0.5rem 1rem 0.5rem 1rem !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+}
+
 /* footer */
 .f-info-links a {
 	color: #222222;
@@ -106,7 +126,7 @@ h3 {
 	padding-bottom: 0.7rem;
 }
 .f-info-socials a {
-  text-decoration: none;
+	text-decoration: none;
 }
 .f-info-socials i {
 	color: #222222;
@@ -144,6 +164,49 @@ h3 {
 	.f-info-socials {
 		padding-bottom: 0;
 	}
+}
+/* filters */
+#filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+#filter {
+    text-align: center;
+    color: gray;
+    font-weight: 500;
+    font-size: 14px;
+    margin-left: 1rem;
+}
+#filter:hover {
+    color: #222222;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+.tax-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1.1rem;
+    padding: 0.5rem 1.2rem;
+    border-radius: 1rem;
+    /* background-color: #f8f9fa; */
+    background-color: #212529;
+    border: 1px solid #dee2e6;
+    height: 3rem;
+}
+.tax-toggle label {
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    /* color: #222222 !important; */
+    color: #fff !important;
+    cursor: pointer;
+}
+.tax-toggle input {
+    cursor: pointer;
+}
+.tax-info {
+    display: none;
 }
 /* cards */
 .card {
@@ -411,3 +474,4 @@ h3 {
 		transform: translateY(0px);
 	}
 }
+/* map */

@@ -10,6 +10,7 @@ const methodOverride = require("method-override"); // for PUT and DELETE request
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js"); // custom error class for Express
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash"); // for flash messages
 const passport = require("passport"); // for authentication
 const LocalStrategy = require("passport-local");
@@ -30,6 +31,13 @@ app.engine("ejs", ejsMate); // using ejsMate for layout support in EJS
 //session handler
 app.use(
 	session({
+        store: MongoStore.create({
+            mongoUrl: process.env.ATLAS_URL,
+            crypto: {
+                secret: process.env.SESSION_SECRET
+            },
+            touchAfter: 24 * 60 * 60,
+        }),
 		secret: process.env.SESSION_SECRET,
 		resave: false,
 		saveUninitialized: true,
@@ -50,7 +58,8 @@ passport.serializeUser(User.serializeUser()); // These handle how user data is s
 passport.deserializeUser(User.deserializeUser()); // These handle how user data is stored in and retrieved from the session.
 
 /* -------------------------- connecting to MongoDB ------------------------- */
-const MONGO_URL = process.env.MONGO_URL;
+const MONGO_URL = process.env.ATLAS_URL;
+
 main()
 	.then(() => {
 		console.log("Connected to MongoDB");

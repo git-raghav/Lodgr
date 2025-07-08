@@ -42,7 +42,6 @@ app.use(
 		resave: false,
 		saveUninitialized: true,
 		cookie: {
-            secure: process.env.NODE_ENV === "production", // Send cookie only over HTTPS
 			expires: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
 			maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
 			httpOnly: true, // prevents client-side JavaScript from accessing the cookie

@@ -37,12 +37,12 @@ app.use(
 				secret: process.env.SESSION_SECRET,
 			},
 			touchAfter: 24 * 60 * 60,
+            ttl: 7 * 24 * 60 * 60, //Set TTL explicitly to 7 days
 		}),
 		secret: process.env.SESSION_SECRET,
 		resave: false,
-		saveUninitialized: true,
+		saveUninitialized: false,
 		cookie: {
-			expires: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
 			maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
 			httpOnly: true, // prevents client-side JavaScript from accessing the cookie
 		},

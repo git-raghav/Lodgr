@@ -3,6 +3,7 @@ if(process.env.NODE_ENV !== "production") {
 }
 const mongoose = require('mongoose');
 const Listing = require("../models/listing.js");// Import the Listing model
+const User = require("../models/user.js");// Import the user model
 const initData = require('./data.js');// Import the sample data
 
 const MONGO_URL= process.env.ATLAS_URL;
@@ -21,6 +22,16 @@ async function main() {
 // This function clears the existing listings and inserts the sample data
 const initDB = async () => {
     await Listing.deleteMany({});
+    await User.deleteMany({});
+
+    const dummyUserId = new mongoose.Types.ObjectId("6863fbad455fc8838392ab61");
+    const dummyUser = new User({
+        _id: dummyUserId,
+        username: process.env.DEMO_USERNAME,
+        email: process.env.DEMO_EMAIL,
+    });
+    await User.register(dummyUser, process.env.DEMO_PASSWORD);
+
     await Listing.insertMany(initData.data);
     console.log("Database initialized with sample data");
 }

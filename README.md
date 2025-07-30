@@ -80,7 +80,7 @@ Lodgr connects travelers with unique stays across the globe. From urban pads to 
 -   **Authorization**: Middleware checks for resource ownership.
 -   **Error Handling**: Centralized with custom ExpressError class and async error wrapper (wrapAsync).
 -   **Input Validation**: Prevents invalid or malicious data from reaching the database.
--   **Session Security**: Sessions stored in MongoDB, environment variables for sensitive config.
+-   **Session Security**: Session-based authentication using express-session, with secure cookie expiry and storage in MongoDB. Users remain logged in across sessions (no need to log in repeatedly). If a user tries to access a protected action while not logged in, they are redirected to the login page and, after successful login, are automatically redirected back to their intended action or page. Environment variables are used for sensitive config.
 
 ---
 
